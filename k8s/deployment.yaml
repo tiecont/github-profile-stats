@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: github-stats
-          image: docker.io/library/github-profile-stats:1.0.0
+          image: docker.io/library/github-profile-stats:1.1.0
           imagePullPolicy: Never
 
           ports:
