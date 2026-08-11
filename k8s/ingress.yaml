@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: github-stats
+
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+
+spec:
+  ingressClassName: nginx
+
+  tls:
+    - hosts:
+        - github-stats.167.233.211.87.nip.io
+      secretName: github-stats-tls
+
+  rules:
+    - host: github-stats.167.233.211.87.nip.io
+
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+
+            backend:
+              service:
+                name: github-stats
+                port:
+                  number: 80

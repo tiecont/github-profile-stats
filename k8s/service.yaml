@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: github-stats
+
+spec:
+  type: ClusterIP
+
+  selector:
+    app: github-stats
+
+  ports:
+    - name: http
+      port: 80
+      targetPort: http

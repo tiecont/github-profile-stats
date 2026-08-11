@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: github-stats
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: github-stats
+
+  template:
+    metadata:
+      labels:
+        app: github-stats
+
+    spec:
+      containers:
+        - name: github-stats
+          image: docker.io/library/github-profile-stats:1.0.0
+          imagePullPolicy: Never
+
+          ports:
+            - name: http
+              containerPort: 3000
+
+          env:
+            - name: PORT
+              value: "3000"
+
+            - name: GITHUB_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: github-stats-env
+                  key: GITHUB_TOKEN
+
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 3
+            periodSeconds: 10
+
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 30
+
+          resources:
+            requests:
+              cpu: 20m
+              memory: 32Mi
+
+            limits:
+              cpu: 200m
+              memory: 128Mi
+
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
