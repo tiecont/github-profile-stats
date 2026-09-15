@@ -17,8 +17,8 @@ spec:
     spec:
       containers:
         - name: github-stats
-          image: docker.io/library/github-profile-stats:1.1.0
-          imagePullPolicy: Never
+          image: ghcr.io/tiecont/github-profile-stats:c0428c3
+          imagePullPolicy: IfNotPresent
 
           ports:
             - name: http
@@ -34,9 +34,12 @@ spec:
                   name: github-stats-env
                   key: GITHUB_TOKEN
 
+            - name: GITHUB_USERNAME
+              value: "tiecont"
+
           readinessProbe:
             httpGet:
-              path: /healthz
+              path: /readyz
               port: http
             initialDelaySeconds: 3
             periodSeconds: 10
@@ -59,6 +62,7 @@ spec:
 
           securityContext:
             allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
             capabilities:
               drop:
                 - ALL
