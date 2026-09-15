@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: github-stats
-          image: ghcr.io/tiecont/github-profile-stats:c0428c3
+          image: ghcr.io/tiecont/github-profile-stats:694c97f3245a934c47098dfa72f0613f2542b77f
           imagePullPolicy: IfNotPresent
 
           ports:
