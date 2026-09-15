@@ -44,7 +44,8 @@ jobs:
       - name: Update deployment image
         env:
           IMAGE: ghcr.io/tiecont/github-profile-stats:${{ github.sha }}
-        run: sed -i -E "s#image: ghcr.io/tiecont/github-profile-stats:[^[:space:]]+#image: ${IMAGE}#" k8s/deployment.yaml
+        run: |
+          sed -i -E "s#image: ghcr.io/tiecont/github-profile-stats:[^[:space:]]+#image: ${IMAGE}#" k8s/deployment.yaml
 
       - name: Commit manifest update
         run: |
